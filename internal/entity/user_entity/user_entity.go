@@ -7,6 +7,7 @@ import (
 	"context"
 
 	"github.com/Guilherme-G-Cadilhe/Go-AuctionHouse_Concurrency-Server-Api/internal/internal_error"
+	"github.com/google/uuid"
 )
 
 // User representa a entidade de domínio principal para usuários
@@ -21,14 +22,15 @@ type User struct {
 // É o padrão Repository Pattern - abstração sobre como os dados são persistidos
 // Em Node.js seria como definir uma interface/classe abstrata para o DAO
 type UserRepositoryInterface interface {
-	// FindUserById busca um usuário por ID
-	// Parâmetros:
-	//   - ctx context.Context: Context para timeout/cancelamento
-	//   - id string: ID do usuário a ser buscado
-	// Retorna:
-	//   - *User: Ponteiro para a entidade User (nil se não encontrado)
-	//   - *internal_error.InternalError: Erro customizado (nil se sucesso)
 	FindUserById(ctx context.Context, id string) (*User, *internal_error.InternalError)
+	CreateUser(ctx context.Context, user *User) *internal_error.InternalError
+}
+
+func CreateUser(name string) *User {
+	return &User{
+		Id:   uuid.New().String(), // Gera UUID automaticamente
+		Name: name,
+	}
 }
 
 /*

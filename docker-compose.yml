@@ -5,9 +5,14 @@ services:
       context: .
     ports:
       - "8080:8080"
-    env_file:
-      - cmd/auction/.env
-    command: sh -c "/auction"
+    environment: # Usa env direto ao invés de arquivo
+      - MONGODB_URI=mongodb://mongodb:27017 # Note: usa 'mongodb' (nome do service), não 'localhost'
+      - MONGODB_DATABASE=auctions
+      - BATCH_INSERT_INTERVAL=7m
+      - MAX_BATCH_SIZE=10
+      - AUCTION_INTERVAL=10m
+    depends_on:
+      - mongodb
     networks:
       - localNetwork
 
@@ -16,8 +21,6 @@ services:
     container_name: mongodb
     ports:
       - "27017:27017"
-    env_file:
-      - cmd/auction/.env
     volumes:
       - mongo-data:/data/db
     networks:

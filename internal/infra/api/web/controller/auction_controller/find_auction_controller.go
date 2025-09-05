@@ -2,6 +2,7 @@ package auction_controller
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -48,8 +49,14 @@ func (au *AuctionController) FindAllAuctions(c *gin.Context) {
 
 	auctions, err := au.auctionUseCase.FindAllAuctions(context.Background(), auction_usecase.AuctionStatus(statusNumber), category, productName)
 	if err != nil {
+		fmt.Println(err)
 		errRest := rest_err.ConvertErrors(err)
 		c.JSON(errRest.Code, errRest)
+		return
+	}
+	//return empty array json if not found actions instead of null
+	if len(auctions) == 0 {
+		c.JSON(http.StatusOK, []any{})
 		return
 	}
 

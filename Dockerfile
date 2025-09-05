@@ -38,7 +38,7 @@ WORKDIR /app
 COPY --from=builder /app/main .
 
 # Copia arquivo de config (se necessário)
-# COPY --from=builder /app/config.yaml .
+COPY --from=builder /app/cmd/auction/.env .env
 
 # Muda proprietário dos arquivos
 RUN chown -R appuser:appgroup /app

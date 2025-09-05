@@ -22,11 +22,15 @@ func (bd *BidRepository) FindBidByAuctionId(ctx context.Context, auctionId strin
 		return nil, internal_error.NewInternalServerError(fmt.Sprintf("error trying to find bids by auction id %s", auctionId))
 	}
 	defer cursor.Close(ctx)
+	fmt.Println(cursor)
 
 	if err := cursor.All(ctx, &bids); err != nil {
 		logger.Error(fmt.Sprintf("error trying to find bids by auction id %s", auctionId), err)
 		return nil, internal_error.NewInternalServerError(fmt.Sprintf("error trying to find bids by auction id %s", auctionId))
 	}
+
+	fmt.Println(bids)
+
 	bidsEntities := make([]bid_entity.Bid, len(bids))
 	for i, bid := range bids {
 		bidsEntities[i] = bid_entity.Bid{

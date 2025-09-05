@@ -41,6 +41,7 @@ type UserUseCaseInterface interface {
 	// FindUserById é o caso de uso para buscar usuário por ID
 	// Retorna DTO (não a entidade) para controlar o que é exposto
 	FindUserById(ctx context.Context, id string) (*UserOutputDTO, *internal_error.InternalError)
+	CreateUser(ctx context.Context, userInput UserInputDTO) (*UserOutputDTO, *internal_error.InternalError)
 }
 
 // FindUserById implementa o caso de uso de busca de usuário

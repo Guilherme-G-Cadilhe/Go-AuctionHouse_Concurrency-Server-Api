@@ -2,6 +2,7 @@ package bid_controller
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/Guilherme-G-Cadilhe/Go-AuctionHouse_Concurrency-Server-Api/configuration/rest_err"
@@ -23,7 +24,9 @@ func NewBidController(bidUseCase bid_usecase.BidUseCaseInterface) *BidController
 func (b *BidController) CreateBid(c *gin.Context) {
 	var bidInputDTO bid_usecase.BidInputDTO
 	if err := c.ShouldBindJSON(&bidInputDTO); err != nil {
+		fmt.Println(err)
 		restErr := validation.ValidateErr(err)
+		fmt.Println(restErr)
 		c.JSON(restErr.Code, restErr)
 		return
 	}

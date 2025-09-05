@@ -22,11 +22,13 @@ import (
 func main() {
 
 	ctx := context.Background()
-
+	// Log de início
+	log.Println("=== STARTING APPLICATION ===")
 	if err := godotenv.Load("cmd/auction/.env"); err != nil {
-		log.Fatal("Error loading .env file")
-		return
+		log.Println("Warning: .env file not found, using environment variables from Docker")
 	}
+
+	log.Println("=== CONNECTING TO DATABASE ===")
 
 	databaseConnection, err := mongodb.NewMongoDBConnection(ctx)
 	if err != nil {
@@ -52,6 +54,7 @@ func main() {
 	router.POST("/bid", bidController.CreateBid)
 
 	router.GET("/user/:userId", userController.FindUserById)
+	router.POST("/user", userController.CreateUser)
 
 	err = router.Run(":8080")
 	if err != nil {
