@@ -144,4 +144,5 @@ Go-AuctionHouse/
 - **MongoDB** com Go driver oficial
 - **Gin framework** para APIs REST performáticas
 - **Dependency Injection** manual vs frameworks
-  **Desenvolvido com ❤️ em Go para aprendizado de arquitetura e concorrência**
+
+**Desenvolvido com ❤️ em Go para aprendizado de arquitetura e concorrência**
