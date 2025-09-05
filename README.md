@@ -58,84 +58,6 @@ docker run -d --name mongodb -p 27017:27017 mongo:latest
 go run ./cmd/auction/main.go
 ```
 
-## 🧪 Testando o Sistema
-
-**1. Health Check**
-
-```bash
-curl http://localhost:8080/health
-```
-
-**2. Criar Usuário**
-
-```bash
-curl -X POST http://localhost:8080/user \
-  -H "Content-Type: application/json" \
-  -d '{"name": "João Silva"}'
-```
-
-```json
-Resposta:
-{
-  "id": "123e4567-e89b-12d3-a456-426614174000",
-  "name": "João Silva"
-}
-```
-
-**3. Criar Leilão**
-
-```bash
-curl -X POST http://localhost:8080/auctions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "product_name": "iPhone 14 Pro",
-    "category": "Electronics",
-    "description": "iPhone 14 Pro usado em ótimo estado, sem arranhões",
-    "condition": 1
-  }'
-Condições disponíveis:
-
-0 = Novo
-1 = Usado
-2 = Recondicionado
-```
-
-**4. Fazer Lance (Concorrente)**
-
-```bash
-curl -X POST http://localhost:8080/bid \
-  -H "Content-Type: application/json" \
-  -d '{
-    "user_id": "USER_ID_AQUI",
-    "auction_id": "AUCTION_ID_AQUI",
-    "amount": 1500.50
-  }'
-```
-
-5. Buscar Lances de um Leilão
-   bash
-   Copiar
-
-curl http://localhost:8080/bid/AUCTION_ID_AQUI 6. Ver Lance Vencedor
-bash
-Copiar
-
-curl http://localhost:8080/auctions/winner/AUCTION_ID_AQUI 7. Listar Todos os Leilões
-bash
-Copiar
-
-# Todos os leilões
-
-curl http://localhost:8080/auctions
-
-# Filtrar por categoria
-
-curl "http://localhost:8080/auctions?category=Electronics"
-
-# Filtrar por nome do produto
-
-curl "http://localhost:8080/auctions?productName=iPhone"
-
 ## ⚡ Sistema de Concorrência
 
 ### Batch Processing de Lances
@@ -151,6 +73,7 @@ O sistema implementa processamento em lote para máxima performance:
 
 ## 📁 Estrutura do Projeto
 
+```
 Go-AuctionHouse/
 ├── cmd/auction/ # Aplicação principal
 │ └── main.go
@@ -179,6 +102,7 @@ Go-AuctionHouse/
 ├── docker-compose.yml
 ├── Dockerfile
 └── go.mod
+```
 
 ## 🧩 Conceitos Implementados
 
